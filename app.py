@@ -8,10 +8,13 @@ st.title("📰 Fake News Detector for Students")
 @st.cache_resource
 def load_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    tokenizer = DistilBertTokenizer.from_pretrained("fake_news_tokenizer")
-    model = DistilBertForSequenceClassification.from_pretrained("fake_news_model")
+
+    tokenizer = DistilBertTokenizer.from_pretrained("sidharth-ai/fake-news-detector")
+    model = DistilBertForSequenceClassification.from_pretrained("sidharth-ai/fake-news-detector")
+
     model.to(device)
     model.eval()
+
     return tokenizer, model, device
 
 tokenizer, model, device = load_model()
@@ -44,4 +47,5 @@ if st.button("Analyze"):
             st.error("⚠️ Fake News")
 
         st.write(f"Confidence: {confidence:.2f}%")
+
         st.progress(confidence / 100)
